@@ -1,0 +1,16 @@
+body {
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, var(--bs-primary-bg-subtle), var(--bs-body-bg));
+}
+
+.card {
+    border: 0;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}

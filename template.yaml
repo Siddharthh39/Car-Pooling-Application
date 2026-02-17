@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Cab Booking Lambda API
+
+Resources:
+  CabBookingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: cab-booking-api
+      Runtime: java17
+      Handler: api.LambdaHandler::handleRequest
+      CodeUri: target/cab-booking-lambda.jar
+      MemorySize: 1024
+      Timeout: 20
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          DB_HOST: your-rds-endpoint
+          DB_PORT: '3306'
+          DB_NAME: cab_booking
+          DB_USER: your-db-user
+          DB_PASS: your-db-pass
+      Events:
+        ProxyApi:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+        RootHealth:
+          Type: HttpApi
+          Properties:
+            Path: /health
+            Method: GET
